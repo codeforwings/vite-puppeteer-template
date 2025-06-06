@@ -4,6 +4,11 @@ This template should help get you started developing with Vue 3 in Vite. The tem
 
 Learn more about IDE Support for Vue in the [Vue Docs Scaling up Guide](https://vuejs.org/guide/scaling-up/tooling.html#ide-support).
 
+# Notes
+* Vitest doesn't quite support puppeteer yet. Only Webdriver.io and Playwright.
+  * Webdriver.io is sponsored by BrowserStack, and based on Selenium.
+  * Playwright is sponsored by Microsoft, and is a newer project that supports multiple browsers.
+
 # Install
 * Vite Test
 * Puppeteer
@@ -16,10 +21,11 @@ pnpm add puppeteer -D
 
 # Vitest
 pnpm add vitest -D
-pnpm add @vitest/ui -D
+
+pnpm add @vitest/ui -D # optional dashboard
 
 # One time
-npx puppeteer browsers install chrome
+pnpx puppeteer browsers install chrome
 ```
 
 # Example

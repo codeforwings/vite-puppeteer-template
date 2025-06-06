@@ -24,6 +24,12 @@ export function writeToFile(fileName,data,space=2){
 
 import puppeteer from 'puppeteer';
 describe('vite-vue-headless.test.js - localhost', function(){
+  /**
+   * Press a button and test
+   *
+   * https://vitest.dev/api/vi.html
+   * https://vitest.dev/guide/browser/
+   */
   test('localhost - non-headless', async function(){
     const browser = await puppeteer.launch({
       // headless:false,//default is true
