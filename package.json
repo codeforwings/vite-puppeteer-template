@@ -21,5 +21,9 @@
     "puppeteer": "^24.10.0",
     "vite": "^6.3.5",
     "vitest": "^3.2.2"
+  },
+  "stackblitz": {
+    "installDependencies": false,
+    "startCommand": "pnpm i && pnpm run test-headless"
   }
 }
