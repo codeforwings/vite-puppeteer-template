@@ -26,7 +26,8 @@ import puppeteer from 'puppeteer';
 describe('Example.com', function(){
   test('example.com - non-headless', async function(){
     const browser = await puppeteer.launch({
-      headless:false,//default is true
+      // headless:false,//default is true
+      headless:true
     });
     const pages = await browser.pages() // Get the first page if it exists
     const page = pages.length > 0 ? pages[0] : await browser.newPage();
@@ -47,6 +48,7 @@ describe('Example.com', function(){
     test('example.com - headless', async function(){
     const browser = await puppeteer.launch({
       // headless:false,//default is true
+      headless:true
     });
     const pages = await browser.pages() // Get the first page if it exists
     const page = pages.length > 0 ? pages[0] : await browser.newPage();

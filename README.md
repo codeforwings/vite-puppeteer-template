@@ -33,6 +33,12 @@ pnpm add @vitest/ui -D # optional dashboard
 # One time
 pnpx puppeteer browsers install chrome
 npx puppeteer browsers install chrome
+
+pnpx vitest --run --testNamePattern='^ ?Example.com example.com - headless$' tests/example-headless.test.js
+
+# Testing
+pnpx run test-headless
+sudo pnpx run test-headless
 ```
 
 # Example
