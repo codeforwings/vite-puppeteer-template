@@ -5,6 +5,7 @@ This template should help get you started developing with Vue 3 in Vite. The tem
 Learn more about IDE Support for Vue in the [Vue Docs Scaling up Guide](https://vuejs.org/guide/scaling-up/tooling.html#ide-support).
 
 # Notes
+* [StackBlitz Demo](https://stackblitz.com/~/github.com/codeforwings/vite-puppeteer-template)
 * Vitest doesn't quite support puppeteer yet. Only Webdriver.io and Playwright.
   * `Webdriver.io` is sponsored by BrowserStack, and based on Selenium.
   * `Playwright` is sponsored by Microsoft, and is a newer project that supports multiple browsers.
