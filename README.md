@@ -62,11 +62,18 @@ pnpm exec playwright install --help
 
 # looking at the playwright.yml
 npx playwright install --with-deps chromium
+```
+### Run/Test
+```bash
+# Working so far on new project
+# pnpm install playwright -D
+pnpm install @playwright/test -D
 pnpm exec playwright install --with-deps chromium
 
+# Exec - e2e is in the config
+pnpm exec playwright test
 
-
-## i think can only install chromium
+pnpm exec playwright test
 
 ```
 
