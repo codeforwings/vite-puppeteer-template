@@ -63,6 +63,13 @@ pnpm exec playwright install --help
 # looking at the playwright.yml
 npx playwright install --with-deps chromium
 ```
+```bash
+# Playwright server? for remote browser?
+npx playwright install
+npx playwright launch-server chromium
+# launches a browser server and prints the ws:// endpoint
+```
+
 ### Run/Test
 ```bash
 # Working so far on new project
