@@ -6,8 +6,9 @@ Learn more about IDE Support for Vue in the [Vue Docs Scaling up Guide](https://
 
 # Notes
 * Vitest doesn't quite support puppeteer yet. Only Webdriver.io and Playwright.
-  * Webdriver.io is sponsored by BrowserStack, and based on Selenium.
-  * Playwright is sponsored by Microsoft, and is a newer project that supports multiple browsers.
+  * `Webdriver.io` is sponsored by BrowserStack, and based on Selenium.
+  * `Playwright` is sponsored by Microsoft, and is a newer project that supports multiple browsers.
+    * Syntax more similar to Puppeteer with async/await.
 
 # Install
 * Vite Test
