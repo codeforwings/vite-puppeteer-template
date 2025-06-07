@@ -12,7 +12,9 @@ Learn more about IDE Support for Vue in the [Vue Docs Scaling up Guide](https://
   * `Playwright` is sponsored by Microsoft, and is a newer project that supports multiple browsers.
     * Syntax more similar to Puppeteer with async/await.
 * StackBlitz uses Node 20
-
+  * Can't install for some reason?
+* https://replit.com/
+* 
 # Install
 * Vite Test
 * Puppeteer
@@ -30,6 +32,7 @@ pnpm add @vitest/ui -D # optional dashboard
 
 # One time
 pnpx puppeteer browsers install chrome
+npx puppeteer browsers install chrome
 ```
 
 # Example
