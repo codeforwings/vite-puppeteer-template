@@ -6,6 +6,7 @@ Learn more about IDE Support for Vue in the [Vue Docs Scaling up Guide](https://
 
 # Links
 * [StackBlitz Demo](https://stackblitz.com/~/github.com/codeforwings/vite-puppeteer-template)
+* [repl.it](https://replit.com/@jason198/vite-puppeteer-template)
 # Notes
 * Vitest doesn't quite support puppeteer yet. Only Webdriver.io and Playwright.
   * `Webdriver.io` is sponsored by BrowserStack, and based on Selenium.
@@ -13,8 +14,9 @@ Learn more about IDE Support for Vue in the [Vue Docs Scaling up Guide](https://
     * Syntax more similar to Puppeteer with async/await.
 * StackBlitz uses Node 20
   * Can't install for some reason?
+  * 
 * https://replit.com/
-* 
+  * Doesn't work either, at least by default 
 # Install
 * Vite Test
 * Puppeteer
@@ -31,14 +33,38 @@ pnpm add vitest -D
 pnpm add @vitest/ui -D # optional dashboard
 
 # One time
-pnpx puppeteer browsers install chrome
 npx puppeteer browsers install chrome
+pnpm exec puppeteer browsers install --help
+
+pnpm exec puppeteer browsers install chrome
+pnpm exec puppeteer browsers install chromium-headless-shell
+
+
 
 pnpx vitest --run --testNamePattern='^ ?Example.com example.com - headless$' tests/example-headless.test.js
 
 # Testing
 pnpx run test-headless
 sudo pnpx run test-headless
+```
+## PlayWright
+* https://playwright.dev/docs/intro
+```bash
+pnpm create playwright
+# using: js, GA, install playwright
+
+# done in the wizard:
+pnpm exec playwright install
+pnpm exec playwright install --help
+
+
+npx playwright install --with-deps chromium
+pnpm exec playwright install --with-deps chromium
+
+
+
+## i think can only install chromium
+
 ```
 
 # Example
