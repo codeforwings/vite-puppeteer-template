@@ -23,7 +23,6 @@ dist-ssr
 *.sln
 *.sw?
 /pnpm-lock.yaml
-
 # Playwright
 /test-results/
 /playwright-report/
