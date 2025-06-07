@@ -49,6 +49,9 @@ sudo pnpx run test-headless
 ```
 ## PlayWright
 * https://playwright.dev/docs/intro
+* also has `playwright.config.js`/ts
+  * Can be configured to launch server
+* default is e2e or tests. tests-example as well
 ```bash
 pnpm create playwright
 # using: js, GA, install playwright
@@ -57,7 +60,7 @@ pnpm create playwright
 pnpm exec playwright install
 pnpm exec playwright install --help
 
-
+# looking at the playwright.yml
 npx playwright install --with-deps chromium
 pnpm exec playwright install --with-deps chromium
 
