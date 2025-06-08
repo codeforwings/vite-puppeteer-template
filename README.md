@@ -83,6 +83,50 @@ pnpm exec playwright test
 pnpm exec playwright test
 
 ```
+## Selenium-WebDriver
+```bash
+### Selenium WebDriver
+* https://www.npmjs.com/package/selenium-webdriver
+  * `selenium-webdriver`
+* requires `chromedriver`
+* https://github.com/SeleniumHQ/docker-selenium
+  * Docker Selenium is the one that uses noVNC
+* webdriver.io can run on Selenium-webdriver
+
+
+* http://localhost:4444/ui/
+```
+```bash
+# Can try with minis on linux as well to see
+# docker run -d -p 4444:4444 selenium/standalone-chrome
+# 127.0.0.1:9000:9000/udp
+# docker run -d -p 172.17.0.2:4444:4444/udp 172.17.0.2:4444:4444/tcp selenium/standalone-chrome
+# docker run -d -p 172.17.0.2:4444:4444/udp -p 172.17.0.2:4444:4444/tcp selenium/standalone-chrome
+# docker run -d -p 4444:4444/udp -p 4444:4444/tcp selenium/standalone-chrome
+
+# nope.. but at least it's kinda close? also should add the exec for testing. and the shm size...
+docker run -p 4444:4444 -e SE_NODE_HOST=host.docker.internal -e SE_BIND_HOST=0.0.0.0 selenium/standalone-chrome
+docker run -p 4444:4444 -e SE_NODE_HOST=host.docker.internal -e SE_BIND_HOST=192.168.1.58 selenium/standalone-chrome
+docker container ls
+```
+* [ ] check readmeSelenium.md for more details and add. i have the settings there
+
+```bash
+# sudo run 2025
+sudo docker pull selenium/standalone-chrome:latest
+sudo docker run --name c1 -d -p 4444:4444 -p 7900:7900 --shm-size="2g" --hostname c1 selenium/standalone-chrome:latest
+sudo docker container ls
+sudo docker kill c1
+```
+
+```ps1
+$ docker run -d -p 5555:5555 `
+    --shm-size="2g" `
+    -e SE_EVENT_BUS_HOST=<ip-from-machine-1> `
+    -e SE_NODE_HOST=<ip-from-machine-2> `
+    selenium/node-chrome:4.33.0-20250606
+```
+
 
 # Example
 ```js
