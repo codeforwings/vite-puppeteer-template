@@ -36,15 +36,16 @@ describe('webdriverio', function(){
     //https://webdriver.io/docs/api/webdriverBidi/
     //https://webdriver.io/docs/api/modules#remoteoptions-modifier
     const browser = await remote({
-        protocol: 'http',
+      // protocol: 'http',
 
       // hostname: 'localhost', // or your Docker host IP
       // hostname: '192.168.1.58', // or your Docker host IP
-      hostname: "192.168.1.116", // host.docker.internal work?
       // protocol: 'http',
       // hostname:"172.17.0.2",
-      port: 4444,
-      path: '/wd/hub',
+      /* Other Machine */
+      // hostname: "192.168.1.116", // host.docker.internal work?
+      // port: 4444,
+      // path: '/wd/hub',
 
       capabilities: {
         browserName: 'chrome',
@@ -58,7 +59,66 @@ describe('webdriverio', function(){
     await browser.url('http://example.com');
     const text = await browser.$('h1').getText();
     // console.log(text);
+
+    await browser.deleteSession();
     expect(text).toBe('Example Domain');
+  });
+
+  test('webetmarkets.com', async function(){
+    const browser = await remote({
+      capabilities: {
+        browserName: 'chrome',
+        // 'goog:chromeOptions': { args: ['--headless', '--disable-gpu'] }
+      },
+
+    });
+    await browser.url('https://webetmarkets.com/app/');
+    {
+      const text = await browser.$(
+        '#vMain > div > div > div:nth-child(1) > div > div > div > div.v-snack__action > button > span'
+      )
+        .getText();
+      console.log(text);
+      expect(text).toBe('CLOSE');
+      // expect(text).toBe('Example Domain');//dev: uncomment to keep it open
+    }
+    {
+      //try clicking in the middle of the line?
+
+      //Get Element of the canvas
+      console.log('1. Check Graph Element Dimensions');
+      const sChartSelector = '#mvbpPageLayout2025-real-default > div.px-0.mx-0.py-0.mx-0.col.col-12';
+      // const graphElement = await browser.$(sChartSelector).getElement();
+      const graphElement = await browser.$(sChartSelector);
+      console.log(graphElement.selector);
+      const {x,y} = await graphElement.getLocation();
+      const {width,height} = await graphElement.getSize();
+      const rect = { x, y, width, height };
+      //log dimensions
+      // const rect = await browser.getElementRect(graphElement.getElement().elementId);
+      // const ryect = await graphElement.get
+      console.log('Graph Element Dimensions:', rect);
+      // const { x, y, width, height } = rect;
+      // const { x, y, width, height } = rect;
+
+
+      const midX = width / 2;
+      const midY = height / 2;
+      const xClick = x + Math.floor(midX);
+      const yClick = Math.floor(y + midY);
+      console.log('Clicking at:', { x: xClick, y: yClick });
+      //might be off
+      // await graphElement.click({
+      await browser.$('body').click({
+        x: xClick,
+        y: yClick
+      });
+      // await page.mouse.click(x + midX, y + midY);//pretty close i think
+
+    }
+
+
+
     await browser.deleteSession();
   });
 },100000);

@@ -84,6 +84,44 @@ pnpm exec playwright test
 
 ```
 ## Selenium-WebDriver
+* * https://www.selenium.dev/documentation/grid/getting_started/
+### Java - Linux
+* Seems easier
+```bash
+# Ubuntu 24
+# check java version
+java -version
+which java
+
+# Install java jre or jdk
+apt list --installed | grep default-jre
+# apt list --installed | grep default-jdk
+sudo apt install default-jdk
+```
+```bash
+# Run - Ubuntu/Debian
+tmux
+java -jar /opt/selenium/selenium-server.jar standalone --help
+java -jar /opt/selenium/selenium-server.jar standalone
+## With first IP address
+java -jar /opt/selenium/selenium-server.jar standalone --host $(hostname -I | awk '{print $1}') --allow-cors true
+
+# Get the first IP address from hostname -I
+ip=$(hostname -I | awk '{print $1}')
+echo $ip
+
+curl http://example.com
+```
+
+#### debug
+```bash
+tree /opt/google/chrome/chrome
+tree /opt/google/chrome/
+```
+
+### Docker
+* [ ] Fix Docker Network settings. for java it's --host
+  * https://www.selenium.dev/documentation/grid/configuration/cli_options/
 ```bash
 ### Selenium WebDriver
 * https://www.npmjs.com/package/selenium-webdriver
