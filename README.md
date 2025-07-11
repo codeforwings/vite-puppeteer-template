@@ -153,11 +153,33 @@ docker container ls
 # sudo run 2025
 sudo docker pull selenium/standalone-chrome:latest
 sudo docker run --name c1 -d -p 4444:4444 -p 7900:7900 --shm-size="2g" --hostname c1 selenium/standalone-chrome:latest
+
+# trying with extra settings
+sudo docker run --name c1 -d -p 4444:4444 -p 5900:5900 -p 7900:7900 --shm-size="2g" --hostname c1 selenium/standalone-chrome:latest
+
+
 sudo docker container ls
-sudo docker kill c1
+sudo docker network ls
+sudo docker network inspect host
+sudo docker inspect c1
+
+sudo docker start c1
+sudo docker stop c1
+sudo docker rm c1
 ```
 
-```ps1
+```bash
+docker run -d -p 4444:4444 -p 5900:5900 --shm-size="2g" selenium/standalone-chrome:4.33.0-20250606
+
+
+# launch  -d vs --rm -it
+sudo docker run -d --shm-size="2g" --name=c1 --network=host selenium/standalone-chrome:latest
+# launch inside
+sudo docker run --rm -it --shm-size="2g" --name=c1 --network=host selenium/standalone-chrome:latest
+
+
+
+# SE_NODE_GRID_URL=http://<hostMachine>:4444
 $ docker run -d -p 5555:5555 `
     --shm-size="2g" `
     -e SE_EVENT_BUS_HOST=<ip-from-machine-1> `
@@ -165,6 +187,108 @@ $ docker run -d -p 5555:5555 `
     selenium/node-chrome:4.33.0-20250606
 ```
 
+
+
+## Other versions?
+* https://github.com/SeleniumHQ/docker-selenium
+  * docs
+* https://hub.docker.com/r/selenium/standalone-chrome
+  * the one tried first
+* https://hub.docker.com/r/selenium/standalone-docker
+#### Docker Network Check / Install hub
+* https://hub.docker.com/r/selenium/hub
+```bash
+sudo docker network ls # Check for network called selenium-hub
+sudo docker network ls | grep grid
+```
+* host.docker.internal
+* http://172.18.0.2:4444/
+```bash
+sudo docker network create grid
+
+# delete if needed
+sudo docker inspect grid
+sudo docker network rm grid
+```
+```bash
+sudo docker stop selenium-hub
+sudo docker rm selenium-hub
+
+sudo docker container ls --all
+sudo docker container ls | grep c1
+
+# C1 - debug
+sudo docker inspect c1
+sudo docker container ls
+sudo docker start c1
+sudo docker stop c1
+sudo docker rm c1
+
+sudo docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' c1
+sudo docker inspect c1
+sudo docker inspect c1 |grep -i SE_NODE_GRID_URL
+sudo docker inspect c1 |grep -i URL
+sudo docker inspect c1 |grep -i SE_
+
+```
+* SE_START_XVFB - for headless
+##### 1. Hub
+* meant for running on remote
+```bash
+sudo docker run -d -p 4442-4444:4442-4444 --net grid --name selenium-hub selenium/hub:latest
+
+sudo docker container ls
+sudo docker container ls |grep selenium-hub
+```
+#### 2. Nodes
+```bash
+# renamed to c1
+docker run -d --net grid -e SE_EVENT_BUS_HOST=selenium-hub --shm-size="2g" -e SE_EVENT_BUS_PUBLISH_PORT=4442 -e SE_EVENT_BUS_SUBSCRIBE_PORT=4443 --name c1 selenium/node-chrome:latest
+```
+* difference seems like selenium/`standalone`-chrome vs `node`-chrome
+  * standalone is meant for local only. hub + node[s] is for remote
+```bash
+# Full Example from docs
+docker run -d --net grid -e SE_EVENT_BUS_HOST=selenium-hub \
+    --shm-size="2g" \
+    -e SE_EVENT_BUS_PUBLISH_PORT=4442 \
+    -e SE_EVENT_BUS_SUBSCRIBE_PORT=4443 \
+    selenium/node-chrome:latest
+
+docker run -d --net grid -e SE_EVENT_BUS_HOST=selenium-hub \
+    --shm-size="2g" \
+    -e SE_EVENT_BUS_PUBLISH_PORT=4442 \
+    -e SE_EVENT_BUS_SUBSCRIBE_PORT=4443 \
+    selenium/node-edge:latest
+
+docker run -d --net grid -e SE_EVENT_BUS_HOST=selenium-hub \
+    --shm-size="2g" \
+    -e SE_EVENT_BUS_PUBLISH_PORT=4442 \
+    -e SE_EVENT_BUS_SUBSCRIBE_PORT=4443 \
+    selenium/node-firefox:latest
+
+```
+
+* misc commands:
+  * http://localhost:4444/ui/
+  * http://172.18.0.3:5555
+    * c1 node
+```bash
+sudo docker image ls
+sudo docker container ls
+```
+```ps1
+sudo docker network ls
+# shows bridge,host,none - linux
+# shows bridge,conda-jupyter-node_default,docker_default,host,none - windows
+# more information
+sudo docker network inspect bridge # 172.17.0.0/16 172.17.0.1
+sudo docker network inspect docker_default #172.21.0.0/16 172.21.0.1
+sudo docker network inspect host
+
+# inspect c1 container
+sudo docker inspect c1
+```
 
 # Example
 ```js

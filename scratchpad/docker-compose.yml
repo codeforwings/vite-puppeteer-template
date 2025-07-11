@@ -1,0 +1,100 @@
+# First draft that worked. With webdriverio and docker on windows
+# docker network ls
+# i believe need docker `network create grid`
+# since i configured it to external
+services:
+  # traefik:
+  #   image: traefik:v3.4
+  #   command:
+  #     - "--entrypoints.web.address=:80"
+  #     - "--providers.docker=true"
+  #     - "--api.insecure=true"
+  #   ports:
+  #     - "80:80"
+  #     - "8080:8080"  # Traefik dashboard
+  #   volumes:
+  #     - "/var/run/docker.sock:/var/run/docker.sock:ro"
+  #     # - /var/run/docker.sock:/var/run/docker.sock
+  #     # slightly different giving
+  #   networks:
+  #     - grid
+
+  selenium-hub:
+    container_name: selenium-hub
+  # selenium: # standalone
+    image: selenium/hub:latest
+    # image: selenium/standalone-chrome:latest
+    # https://hub.docker.com/r/selenium/standalone-chrome/tags
+    # this image is hub... i used standalone in the other ones
+    # apparently i just used 4 standalones lol
+    networks:
+      - grid
+    # labels:
+      # - "traefik.http.routers.selenium.rule=Host(`selenium.localhost`)"
+      # - traefik.http.services.service.loadbalancer.server.port=4444 # works to 80
+
+
+    # lulz. i should write this down a little
+    # the env didnt change. i mean it did but did nothing
+    # https://github.com/SeleniumHQ/docker-selenium/blob/trunk/Standalone/generate_config
+    # might be more useful
+    # standalone ignores a lot of the env variables
+    environment:
+      # https://github.com/SeleniumHQ/docker-selenium/blob/trunk/ENV_VARIABLES.md
+      - GRID_MAX_SESSION=16
+      - SE_VNC_NO_PASSWORD=1
+      # - SE_NODE_PORT=4445 # for testing didnt do anything
+      # - SE_ROUTER_PORT=4445 # for testing didnt do anything
+      # - SE_HUB_PORT=4445 # maybe it is tied to the hub? lol wth nope?
+      # - SE_HUB_HOST=host.docker.internal
+      # - SE_ROUTER_HOST=host.docker.internal
+      # it's node/session or is it part of the hub
+      # - SE_EXTERNAL_URL=host.docker.internal # didnt work
+      # i think it's node host but who knows
+      # - SE_NODE_HOST=host.docker.internal
+      # - SE_NODE_HOST=172.18.0.2
+      # defn the hostname -I of the container
+      # - SE_NODE_HOST=172.18.0.1 # wrong one - did nothing
+      # not sure if that did anything
+      # SE_RELAX_CHECKS
+    ports:
+      - "4442-4444:4442-4444"
+      # - "4444:4444"
+      # - "7900:7900" # goes to node
+      # for testing
+    shm_size: 2g
+
+  chrome:
+  # https://hub.docker.com/r/selenium/node-chrome
+  # novnc config goes here
+    image: selenium/node-chrome:latest
+    depends_on:
+      - selenium-hub
+    environment:
+      # - HUB_HOST=selenium-hub # this needed?
+      - SE_EVENT_BUS_HOST=selenium-hub
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+      # - SE_VNC_VIEW_ONLY=1
+      - SE_VNC_NO_PASSWORD=1
+      # bingo: grid url, but the port isnt going to be right?
+      # - SE_NODE_GRID_URL=http://selenium-hub:4444 # try or maybe need to use ip or host.docker.internal
+      - SE_NODE_GRID_URL=http://host.docker.internal:4444 # try or maybe need to use ip or host.docker.internal
+      # might not want 4444 port for the node as well
+    ports:
+          - "7900:7900" # Expose noVNC port
+      # 5555 probably here in the node
+    networks:
+      - grid
+    shm_size: 2g
+  # whoami:
+  #   image: traefik/whoami
+  #   labels:
+  #     - "traefik.http.routers.whoami.rule=Host(`whoami.localhost`)"
+  #   networks:
+  #     - grid
+
+networks:
+  grid:
+    name: grid
+    external: true
