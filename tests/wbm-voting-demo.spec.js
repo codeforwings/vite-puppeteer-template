@@ -83,6 +83,8 @@ export class WBMVotingDemo {
     this.browser = browser;
   }
   sChartSelector = '#mvbpPageLayout2025-real-default > div.px-0.mx-0.py-0.mx-0.col.col-12'
+  width = 1000;
+  height = 1000;
   /**
    * Step A. Passes if doesn't timeout
    * Step 0
@@ -90,6 +92,7 @@ export class WBMVotingDemo {
   async waitingForPage_s0(){
     const browser = this.browser;
     await browser.url('https://webetmarkets.com/app');
+    await browser.setWindowSize(this.width, this.height)
     const query =
       '#vMain > div > div > div:nth-child(1) > div > div > div > div.v-snack__action > button > span';
     await browser.$(query)
@@ -182,7 +185,7 @@ export class WBMVotingDemo {
       xOffset = Math.floor(xOffset);
       yOffset = Math.floor(yOffset);
       //bear bull not exact but let's see? because it's not right in middle, which i feel is ok
-      console.log(`Clicking at: x=${xOffset}, y=${yOffset}, change=${change} ${type}`);
+      // console.log(`Clicking at: x=${xOffset}, y=${yOffset}, change=${change} ${type}`);
       // https://stackoverflow.com/questions/41805494/convert-xy-reference-to-pixel-reference
       // await ele.moveTo({
       //   xOffset,
@@ -204,6 +207,69 @@ export class WBMVotingDemo {
       // to simulate delay... maybe better way
       // await browser.saveScreenshot('tmp/wbm-mousemove-vote-prod-0.png');
       await new Promise(resolve => setTimeout(resolve, 300));//todo fix me?
+
+
+
+      //not sure if this is needed atm... tbh
+      // {
+      // const midX = width / 2;
+      // const midY = height / 2;
+      // await page.mouse.click(x + width * i/100, y + midY);//clicking in the middle of the graph
+      // }
+    }
+  }
+
+  /**
+   * Not clicking just screenshots
+   * created a folder. should probably create folders too
+   * @return {Promise<void>}
+   */
+  async dev_voteRNG_s2(){
+    const browser = this.browser;
+    const { x, y, width, height } = this.rect;
+
+
+    /** new dimensions are
+     *  { x: 0, y: 60, width: 761, height: 321 }
+     * */
+    /* from 75% to 100% horizontally x ----> */
+    const ele = this.graphElement;
+    for (let i = 75; i <= 100; i++) {
+    //maybe need to zoom in a bit for more finese?
+    // for (let i = 75; i <= 75; i++) {
+      const {change,type}= randomPriceChange()
+      //slightly different because it's from the center
+      // const xOffset = x + width * i / 100;//i think this is absolute. so now it's half i think
+      let xOffset,yOffset;
+      xOffset = (width * i / 100) - width/2;//i think this is absolute. so now it's half i think
+      yOffset = (height/2 * (change));//change is slightly different
+
+      xOffset = Math.floor(xOffset);
+      yOffset = Math.floor(yOffset);
+      //bear bull not exact but let's see? because it's not right in middle, which i feel is ok
+      // console.log(`Clicking at: x=${xOffset}, y=${yOffset}, change=${change} ${type}`);
+      // https://stackoverflow.com/questions/41805494/convert-xy-reference-to-pixel-reference
+      // await ele.moveTo({
+      //   xOffset,
+      //   yOffset,
+      //   // xOffset: 100,//+ goes right, - goes left
+      //   // yOffset: 100,//+ goes down, - goes up
+      // });//center
+      await ele.click({
+        x: xOffset,
+        y: yOffset
+      });
+      // await ele.click({
+      //     x:x,
+      //     y:y
+      //   }
+      // );//clicking random
+
+      // await page.mouse.click(x + width * i/100, y + (height * (0.5 + change)));//clicking random. og old
+      // to simulate delay... maybe better way
+      // await browser.saveScreenshot('tmp/wbm-mousemove-vote-prod-0.png');
+      await new Promise(resolve => setTimeout(resolve, 300));//todo fix me?
+
 
 
       //not sure if this is needed atm... tbh
