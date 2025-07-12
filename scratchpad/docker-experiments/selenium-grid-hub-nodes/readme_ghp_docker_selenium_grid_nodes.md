@@ -23,6 +23,8 @@ curl.exe -X GET http://host.docker.internal:4444/wd/hub/status
 
 # kill sessions manually:
 curl.exe -X DELETE http://host.docker.internal:4444/wd/hub/session/{sessionId}
+## http://host.docker.internal:4444/ui/#/sessions
+curl.exe -X DELETE http://host.docker.internal:4444/wd/hub/session/
 
 
 # oh this launches it
@@ -44,5 +46,6 @@ docker-compose up
 docker-compose down # remove
 
 docker network ls
+docker network create grid
 ```
 
