@@ -95,6 +95,43 @@ describe('webdriver.io remote', function(){
     await browser.deleteSession();
     expect(text).toBe('Example Domain');
   });
+  /**
+   * Expects two chrome nodes
+   */
+  test('example.com chrome_1', async function(){
+    //https://webdriver.io/docs/api/webdriverBidi/
+    //https://webdriver.io/docs/api/modules#remoteoptions-modifier
+    //hmm different configs
+    // https://www.npmjs.com/package/webdriverio
+    let browser0,browser1;
+    const params = {
+      protocol: 'http',
+      hostname: 'host.docker.internal', // or your Docker host IP
+      port: 4444,
+      acceptInsecureCerts: true,
+      path: '/wd/hub',
+      capabilities: {
+        browserName: 'chrome',
+        'goog:chromeOptions': {args: ['--headless', '--disable-gpu']}
+        // 'goog:chromeOptions': { args: ['headless', 'disable-gpu'] }
+        //http://host.docker.internal:7900/
+        //http://host.docker.internal:7901/
+        //http://host.docker.internal:4444/ui/#
+      }
+    }
+    browser0 = await remote(params);
+    browser1 = await remote(params);
+    await browser0.url('http://example.com');
+    const text0 = await browser0.$('h1').getText();
+
+    await browser1.url('http://example.com');
+    const text1 = await browser1.$('h1').getText();
+
+    await browser0.deleteSession();
+    await browser1.deleteSession();
+    expect(text0).toBe('Example Domain');
+    expect(text1).toBe('Example Domain');
+  });
 
 },100000);
 

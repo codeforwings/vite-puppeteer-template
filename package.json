@@ -9,7 +9,9 @@
     "preview": "vite preview",
     "test": "playwright test",
     "test-headless": "playwright test",
-    "test-headless-pupp": "vitest --run --testNamePattern='^ ?Example.com example.com - headless$' tests/example-headless.test.js"
+    "test-headless-pupp": "vitest --run --testNamePattern='^ ?Example.com example.com - headless$' tests-examples/example-headless.test.js",
+    "test-webdriverio-docker": "vitest --run --testNamePattern=^webdriver\\.io remote example\\.com$ ./tests/selenium-grid-docker.spec.js",
+    "test-webdriverio-docker-all": "vitest --run --testNamePattern=^webdriver\\.io remote ./tests/selenium-grid-docker.spec.js"
   },
   "dependencies": {
     "vue": "^3.5.13"

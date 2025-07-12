@@ -28,6 +28,14 @@ curl.exe -X DELETE http://host.docker.internal:4444/wd/hub/session/{sessionId}
 # oh this launches it
 # curl.exe -X POST http://host.docker.internal:4444/wd/hub/session -H "Content-Type: application/json" -d '{"capabilities": {"alwaysMatch": {"browserName": "chrome"}}}'
 ```
+### js unit test
+* todo
+* `    "test-webdriverio-docker": "vitest --run --testNamePattern=^webdriver\\.io remote example\\.com$ ./tests/selenium-grid-docker.spec.js"
+`
+```bash
+pnpm run test-webdriverio-docker
+```
+
 
 ## Debug / Development
 ```bash
@@ -37,3 +45,4 @@ docker-compose down # remove
 
 docker network ls
 ```
+
