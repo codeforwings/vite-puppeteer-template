@@ -1,0 +1,29 @@
+# First draft that worked. With webdriverio and docker on windows
+# docker network ls
+# i believe need docker `network create grid`
+# since i configured it to external
+services:
+   traefik:
+     image: traefik:v3.4
+     command:
+       - "--entrypoints.web.address=:80"
+       - "--providers.docker=true"
+       - "--api.insecure=true"
+     ports:
+       - "80:80"
+       - "8080:8080"  # Traefik dashboard
+     volumes:
+       - "/var/run/docker.sock:/var/run/docker.sock:ro"
+       # - /var/run/docker.sock:/var/run/docker.sock
+       # slightly different giving
+
+   whoami:
+        image: traefik/whoami
+        labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.whoami.rule=Host(`whoami.localhost`)"
+        - "traefik.http.services.whoami.loadbalancer.server.port=80"
+
+    # labels:
+      # - "traefik.http.routers.selenium.rule=Host(`selenium.localhost`)"
+      # - traefik.http.services.service.loadbalancer.server.port=4444 # works to 80
