@@ -2,8 +2,9 @@
 # docker network ls
 # i believe need docker `network create grid`
 # since i configured it to external
+# add cli variables later
+## https://serversforhackers.com/c/div-variables-in-docker-compose
 services:
-
   selenium-hub:
     container_name: selenium-hub
   # selenium: # standalone

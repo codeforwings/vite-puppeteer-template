@@ -352,12 +352,21 @@ describe('wbm-voting_webdriverio', function(){
     await browser.saveScreenshot('tmp/wbm-check-window-size.png');
 
   });
+
+  /**
+   * Also record test
+   * https://webdriver.io/docs/api/browser/saveRecordingScreen/
+   */
   test('wbm mousemove middle', async function(){
+
+    // await browser.startRecordingScreen();//only works on appium...
+    // await browser.saveRecordingScreen('tmp/wbm-mousemove-middle-0.mp4');
+    // https://webdriver.io/docs/wdio-video-reporter/
     const wbmVotingDemo = new WBMVotingDemo(browser);
     await wbmVotingDemo.waitingForPage_s0();
-
-    await wbmVotingDemo.clickOnElement()
+    await wbmVotingDemo.clickOnElement();//clicks on middle body so should do nothing
     await browser.saveScreenshot('tmp/wbm-mousemove-middle-0.png');
+
 
   });
   test('wbm mousemove vote prod', async function(){
