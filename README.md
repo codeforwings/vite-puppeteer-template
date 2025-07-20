@@ -9,10 +9,25 @@ Learn more about IDE Support for Vue in the [Vue Docs Scaling up Guide](https://
   * Selenium Standalone doesn't work well compared to separate hub and node containers for configuration.
   * Using docker-compose to make it easier to read
 * dropped playwright and others for now
+* 
+# WebDriverIO with Docker Selenium Grid
+* Latest
 
+## video recording test
+* wdio with webdriverio wrapper
+* https://www.npmjs.com/package/wdio-video-reporter
+* https://webdriver.io/docs/wdio-video-reporter/
+```bash
+# 
+pnpm add wdio-video-reporter -D
+```
+* https://webdriver.io/docs/configurationfile/
+  * add config file?
 # Links
 * [StackBlitz Demo](https://stackblitz.com/~/github.com/codeforwings/vite-puppeteer-template)
 * [repl.it](https://replit.com/@jason198/vite-puppeteer-template)
+
+
 # Notes
 * Vitest doesn't quite support puppeteer yet. Only Webdriver.io and Playwright.
   * `Webdriver.io` is sponsored by BrowserStack, and based on Selenium.
@@ -23,7 +38,9 @@ Learn more about IDE Support for Vue in the [Vue Docs Scaling up Guide](https://
   * 
 * https://replit.com/
   * Doesn't work either, at least by default 
-# Install
+
+# Old Notes
+## Install
 * Vite Test
 * Puppeteer
   * Core is for existing chrome installs

@@ -24,6 +24,7 @@
     "puppeteer": "^24.10.0",
     "vite": "^6.3.5",
     "vitest": "^3.2.2",
+    "wdio-video-reporter": "^6.1.1",
     "webdriverio": "^9.15.0"
   },
   "stackblitz": {
