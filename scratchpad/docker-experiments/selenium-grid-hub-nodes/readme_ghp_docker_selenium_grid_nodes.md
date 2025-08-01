@@ -52,3 +52,19 @@ docker network ls
 docker network create grid
 ```
 
+
+
+# Docker / WSL debug
+* https://stackoverflow.com/questions/62314789/no-internet-connection-on-wsl-ubuntu-windows-subsystem-for-linux
+* i think my wsl might have issues
+```ps1
+gsudo.exe
+
+netsh winsock reset
+netsh int ip reset all
+netsh winhttp reset proxy
+ipconfig /flushdns
+
+# then reboot now windows
+Restart-Computer
+```
