@@ -303,7 +303,8 @@ describe('wbm-voting_webdriverio', function(){
   /** local docker webdriverio params */
   const params = {
     protocol: 'http',
-    hostname: 'host.docker.internal', // or your Docker host IP
+    // hostname: 'host.docker.internal', // or your Docker host IP
+    hostname: 'localhost', // or your Docker host IP
     port: 4444,
     acceptInsecureCerts: true,
     path: '/wd/hub',

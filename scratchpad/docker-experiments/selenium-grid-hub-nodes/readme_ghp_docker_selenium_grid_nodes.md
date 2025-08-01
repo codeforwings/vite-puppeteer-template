@@ -9,6 +9,9 @@ cd ./scratchpad/docker-experiments/selenium-grid-hub-nodes
 
 # Docker Compose Command
 docker-compose up -d # detached mode
+
+# one time:
+docker network create grid
 ```
 ## Links
 * http://host.docker.internal:4444/ui/#

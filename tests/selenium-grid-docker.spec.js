@@ -49,7 +49,7 @@ describe('webdriver.io remote', function(){
 
       // hostname: 'selenium.localhost', // or your Docker host IP
       // port: 80,
-      // hostname: 'localhost', // or your Docker host IP
+      // hostname: 'localhost',// or your Docker host IP
       hostname: 'host.docker.internal', // or your Docker host IP
       port: 4444,
       // hostname: '192.168.1.58', // or your Docker host IP
